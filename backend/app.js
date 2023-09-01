@@ -42,6 +42,7 @@ app.use("/codes", codes);
 
 httpServer.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
+  console.log(process.env.TRAFIKVERKET_API_KEY)
 })
 
 fetchTrainPositions(io);
