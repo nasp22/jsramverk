@@ -1,7 +1,6 @@
-#This is the repository for the course "Javascriptbaserade ramverk" created by Gabriel Rahm and Nadja Spångberg, Team i7.
+Vi använde kommandot `npm audit` för att se vilka säkerthetshål som fanns. Det fanns 3 milda svagheter och 8 allvarliga svagheter. Vi löste de problemen genom att använda kommandot `npm audit fix`. Det fanns inga svagheter som krävde manuella åtgärder.
 
-***  Beskriv i README.md vilka säkerhetshål ni hittade och hur ni åtgärdade de:
+Från början kraschade backend när vi försökte starta det. Vi började lösa det genom att köra kommandot `npm install dotenv`. Efter det skaffade vi en API-nyckel hos Trafikverket och skapade en .env-fil för att lagra nyckeln. 
+När vi gjort de ändringarna startade backend utan problem och vi såg listan med försenade tåg till vänster och kartan med markörer till höger. Nästa problem uppstod när man klickade på ett försenat tåg för att skapa ett nytt ärende. När man gick dit kraschade backend igen för att databas-anrop utfördes men tabellen "tickets" saknades. För att lösa det försökte vi först exekvera reset_db.bash som fyller databas-filen (trains.sqlite) med "tickets" via SQL statements från migrate.sql. Filen gick inte att exekvera, därför gjorde vi det manuellt genom att skriva `sqlite3 db/trains.sqlite` när vi stod i backend-mappen och sedan klistrade vi in innehållet från migrate.sql.
 
-***  Beskriv i README.md vilka steg ni fick gå igenom för att få applikationen att fungera:
-
-***  Gör ett val av frontend ramverk och dokumentera det i README.md:
+Vi har bestämt oss för att använda React som vårt frontend ramverk. Vi valde det för att det har varit det mest populära ramverket flera år i rad. Det har en stor community. Ramverket växer och utvecklas fortfarande av Meta/Facebook. Dessutom finns React Native som underlättar vid utveckling av mobilapplikationer. Allt detta gör att vi känner att det är "future-proof" och ett bra val som vi kan ha användning för i framtiden.
