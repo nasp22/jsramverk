@@ -65,4 +65,19 @@ describe('Test integration to server and API', () => {
                 });
         });
     });
+
+    describe('POST /routes/tickets.js', () => {
+        it('200 HAPPY PATH', (done) => {
+            chai.request(server)
+                .post("/tickets")
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.an("object");
+                    res.body.data.should.be.an("array");
+                    res.body.data.length.should.be.above(0);
+
+                    done();
+                });
+        });
+    });
 });
