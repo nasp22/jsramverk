@@ -40,9 +40,10 @@ app.use("/delayed", delayed);
 app.use("/tickets", tickets);
 app.use("/codes", codes);
 
-httpServer.listen(port, () => {
+const server = httpServer.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-  console.log(process.env.TRAFIKVERKET_API_KEY)
+  // console.log(process.env.TRAFIKVERKET_API_KEY)
 })
 
 fetchTrainPositions(io);
+module.exports = server;
