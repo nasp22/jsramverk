@@ -5,7 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "nyc --reporter=html --reporter=text --reporter=clover mocha --exit --timeout 10000",
-    "clean": "rm -rf node_modules package-lock.json"
+    "clean": "rm -rf node_modules package-lock.json",
+    "posttest": "npm run eslint",
+    "start": "node app.js",
+    "eslint": "eslint ."
   },
   "keywords": [],
   "author": "",
