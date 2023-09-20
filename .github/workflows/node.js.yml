@@ -33,7 +33,7 @@ jobs:
         mongodb-version: ${{ matrix.mongodb-version }}
 
     - name: Change directory to backend
-      run: cd my-project/backend/
+      run: cd jsramverk/backend/
     - name: Install dependencies
       run: npm install
     - name: Run tests
