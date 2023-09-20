@@ -1,13 +1,12 @@
 const database = require('../db/database.js');
-
+let version;
 const trains = {
     fetchAllDelayedTrains: async function fetchAllDelayedTrains() {
         let db;
 
         try {
             db = await database.openDb(version);
-
-        } catch(error) {
+        } catch (error) {
             return {
                 status: error.status,
                 message: error.message,
