@@ -1,8 +1,9 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app.js');
-const trains = require('../models/trains.js');
 const tickets = require('../models/tickets.js');
+const mocha = require('mocha');
+
 chai.should();
 chai.use(chaiHttp);
 
@@ -14,9 +15,9 @@ var datetime = currentdate.getDate() + "/"
                 + currentdate.getMinutes() + ":"
                 + currentdate.getSeconds();
 
-describe('Test integration to server and API', () => {
-    describe('START /app/httpServer', () => {
-        it('200 HAPPY PATH', (done) => {
+mocha.describe('Test integration to server and API', () => {
+    mocha.describe('START /app/httpServer', () => {
+        mocha.it('200 HAPPY PATH', (done) => {
             chai.request(server)
                 .get("/")
                 .end((err, res) => {
@@ -29,8 +30,8 @@ describe('Test integration to server and API', () => {
         });
     });
 
-    describe('GET /routes/codes.js', () => {
-        it('200 HAPPY PATH', (done) => {
+    mocha.describe('GET /routes/codes.js', () => {
+        mocha.it('200 HAPPY PATH', (done) => {
             chai.request(server)
                 .get("/codes")
                 .end((err, res) => {
@@ -43,8 +44,8 @@ describe('Test integration to server and API', () => {
         });
     });
 
-    describe('GET /routes/delayed.js', () => {
-        it('200 HAPPY PATH', (done) => {
+    mocha.describe('GET /routes/delayed.js', () => {
+        mocha.it('200 HAPPY PATH', (done) => {
             chai.request(server)
                 .get("/delayed")
                 .end((err, res) => {
@@ -58,8 +59,8 @@ describe('Test integration to server and API', () => {
         });
     });
 
-    describe('GET /routes/tickets.js', () => {
-        it('200 HAPPY PATH', (done) => {
+    mocha.describe('GET /routes/tickets.js', () => {
+        mocha.it('200 HAPPY PATH', (done) => {
             chai.request(server)
                 .get("/tickets")
                 .end((err, res) => {
@@ -73,17 +74,19 @@ describe('Test integration to server and API', () => {
         });
     });
 
-    describe('POST /routes/tickets.js', () => {
-        it('200 HAPPY PATH', (done) => {
-            process.env.NODE_ENV = "test"
+    mocha.describe('POST /routes/tickets.js', () => {
+        mocha.it('200 HAPPY PATH', (done) => {
+            process.env.NODE_ENV = "test";
             let req = {
-                body:{
+                body: {
                     code: "Test",
                     trainnumber: "run",
                     traindate: datetime
                 }
-            }
-            res = tickets.createTicket(req)
+            };
+
+            tickets.createTicket(req);
+
             chai.request(server)
                 .get("/tickets")
                 .end((err, res) => {
