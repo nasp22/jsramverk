@@ -1,21 +1,21 @@
-.App {
+.DelayTable {
   text-align: center;
 }
 
-.App-logo {
+.DelayTable-logo {
   height: 20vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .DelayTable-logo {
+    animation: DelayTable-logo-spin infinite 20s linear;
   }
 }
 
-.App-header {
+.DelayTable-header {
   background-color: #282c34;
-  min-height: 30vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,11 +24,11 @@
   color: white;
 }
 
-.App-link {
+.DelayTable-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+@keyframes DelayTable-logo-spin {
   from {
     transform: rotate(0deg);
   }
