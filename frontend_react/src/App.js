@@ -8,7 +8,9 @@ function App() {
       <header className="App-header">
         Trafikledare Applikationen
       </header>
-      <Container />
+      <div className="ContainerDiv">
+          <Container />
+      </div>
     </div>
   );
 }
