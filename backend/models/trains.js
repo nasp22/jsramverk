@@ -50,18 +50,10 @@ async function fetchTrainPositions(io) {
                         speed: changedPosition.Speed,
                     };
 
-
-                    if (trainPositions.hasOwnProperty.call(changedPosition.Train.
+                    if (Object.prototype.hasOwnProperty.call(trainPositions, changedPosition.Train.
                         AdvertisedTrainNumber)) {
                         socket.emit("message", trainObject);
                     }
-
-                    // below did not pass ESLint, abowe replaced it
-                    // if (trainPositions.hasOwnProperty(changedPosition.Train.
-                    //     AdvertisedTrainNumber)) {
-                    //     socket.emit("message", trainObject);
-                    // }
-
 
                     trainPositions[changedPosition.Train.AdvertisedTrainNumber] = trainObject;
                 }
