@@ -1,6 +1,6 @@
 import React from 'react';
-import Container from './Container.js'
 import './App.css';
+import MainView from './components/MainView'
 
 function App() {
   return (
@@ -8,8 +8,8 @@ function App() {
       <header className="App-header">
         Trafikledare Applikationen
       </header>
-      <div className="ContainerDiv">
-          <Container />
+      <div className="container">
+          <MainView />
       </div>
     </div>
   );
