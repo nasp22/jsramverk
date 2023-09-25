@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Map from './Map';
 
 const DelayTableView = ({ onTrainClick }) => {
   const [delayedData, setDelayedData] = useState([]);
@@ -21,7 +22,8 @@ const DelayTableView = ({ onTrainClick }) => {
     return Math.floor(diff / (1000 * 60)) + ' minuter';
   };
 
-  return (<>
+  return ( <>
+  <div className="delayed">
     <h1>Försenade tåg</h1>
     <table className="train-table">
       <tbody>
@@ -44,6 +46,8 @@ const DelayTableView = ({ onTrainClick }) => {
         ))}
       </tbody>
     </table>
+</div>
+    <Map />
     </>
   );
 };
