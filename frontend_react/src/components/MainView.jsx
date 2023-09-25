@@ -1,24 +1,26 @@
-import React from "react";
-import DelayTableView from "./DelayTableView";
-import Map from "./Map";
+import React, { useState } from 'react';
+import DelayTableView from './DelayTableView';
+import TicketView from './TicketView';
+import Map from './Map';
 
 const MainView = () => {
+  const [selectedTrain, setSelectedTrain] = useState(null);
 
-    let container = document.getElementsByClassName("container");
+  const handleTrainClick = (train) => {
+    setSelectedTrain(train);
+  };
 
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-
-    return (
-        <>
-          <div className="delayed">
-            <h1>Försenade tåg</h1>
-                <DelayTableView/>
-          </div>
-          <Map/>
-        </>
-      );
-    }
+  return (<>
+    <div className="delayed">
+      {selectedTrain ? (
+        <TicketView selectedTrain={selectedTrain} onBackClick={() => setSelectedTrain(null)} />
+      ) : (
+        <DelayTableView onTrainClick={handleTrainClick} />
+      )}
+        </div>
+      <Map />
+      </>
+  );
+};
 
 export default MainView;

@@ -1,17 +1,10 @@
 import React from 'react';
 
-const TicketView = ({ trainNumber }) => {
+const TicketView = () => {
   return (
-    <div className="ticket-container">
-      <div className="ticket">
-        <a href="/" id="back">&lt;- Tillbaka</a>
-        <h1>Nytt ärende #{trainNumber}</h1>
-        {/* Fyll i formulär för ärende */}
-      </div>
-      <div className="old-tickets" id="old-tickets">
-        <h2>Befintliga ärenden</h2>
-        {/* Visa befintliga ärenden */}
-      </div>
+    <div className="ticketView">
+      <h2>Ticket View</h2>
+      <p>This is the Ticket View.</p>
     </div>
   );
 };
