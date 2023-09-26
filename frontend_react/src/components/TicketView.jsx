@@ -81,7 +81,7 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
   return (
     <div className="ticket-container">
       <div className="ticket">
-        <a href="#" onClick={onBackClick}>
+        <a href="tickets" onClick={onBackClick}>
           Tillbaka
         </a>
         <h1>Nytt ärende #{newTicketId}</h1>

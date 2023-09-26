@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #082b6f;
   min-height: 30vh;
   display: flex;
   flex-direction: column;
@@ -106,8 +106,8 @@ p {
 }
 
 .train-item:hover {
-  background-color: #460505;
-  color:#ccc;
+  background-color: #c6dafbbd;
+  color:#000000;
 }
 
 .train-item .train-number {

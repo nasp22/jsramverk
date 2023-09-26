@@ -6,11 +6,18 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/setimmediate": "^1.0.2",
     "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "setimmediate": "^1.0.5",
+    "socket.io-client": "^4.7.2",
+    "timers": "^0.1.1",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object" : ""
   },
   "scripts": {
     "start": "react-scripts start",

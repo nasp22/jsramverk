@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Map from './Map';
+// import Map from './Map';
 
 const DelayTableView = ({ onTrainClick }) => {
   const [delayedData, setDelayedData] = useState([]);
@@ -47,7 +47,7 @@ const DelayTableView = ({ onTrainClick }) => {
       </tbody>
     </table>
 </div>
-    <Map />
+    {/* <Map /> */}
     </>
   );
 };

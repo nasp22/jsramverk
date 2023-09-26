@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DelayTableView from './DelayTableView';
 import TicketView from './TicketView';
+import Map from './Map';
 
 const MainView = () => {
   const [selectedTrain, setSelectedTrain] = useState(null);
@@ -15,6 +16,7 @@ const MainView = () => {
       ) : (
         <DelayTableView onTrainClick={handleTrainClick} />
       )}
+      <Map/>
       </>
   );
 };

@@ -1,6 +1,7 @@
 import io from 'socket.io-client'
 import React, { useEffect, useRef } from 'react';
 import * as L from 'leaflet';
+// import markerImg from '../icon/location.png'
 
 const Map = () => {
   const mapRef = useRef(null);
@@ -14,6 +15,12 @@ const Map = () => {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+  //   var myMarker = L.icon({
+  //     iconUrl: markerImg,
+  //     iconSize:     [38, 95],
+  //     shadowSize:   [50, 64],
+  // });
 
     const socket = io("http://localhost:1337");
 
