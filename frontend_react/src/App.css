@@ -142,3 +142,20 @@ p {
   width: 100%;
   border-collapse: collapse;
 }
+
+
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .delayed {
+    width: 100%;
+  }
+
+  .map {
+    width: 100%;
+  }
+}
