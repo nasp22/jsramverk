@@ -50,8 +50,7 @@ async function fetchTrainPositions(io) {
                         speed: changedPosition.Speed,
                     };
 
-
-                    if (trainPositions.hasOwnProperty(changedPosition.Train.
+                    if (Object.prototype.hasOwnProperty.call(trainPositions, changedPosition.Train.
                         AdvertisedTrainNumber)) {
                         socket.emit("message", trainObject);
                     }

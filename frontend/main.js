@@ -79,7 +79,6 @@ function outputDelay(item) {
 
 function renderTicketView(item) {
     let container = document.getElementById("container");
-    let newTicketId = 0;
 
     while (container.firstChild) {
         container.removeChild(container.firstChild);
@@ -93,7 +92,7 @@ function renderTicketView(item) {
     container.innerHTML = `<div class="ticket-container">
             <div class="ticket">
                 <a href="" id="back"><- Tillbaka</a>
-                <h1>Nytt ärende #<span id="new-ticket-id"></span></h1>
+                <h1>Nytt ärende</h1>
                 ${locationString}
                 <p><strong>Försenad:</strong> ${outputDelay(item)}</p>
                 <form id="new-ticket-form">
@@ -145,18 +144,10 @@ function renderTicketView(item) {
     fetch("http://localhost:1337/tickets")
         .then((response) => response.json())
         .then((result) => {
-            var lastId = result.data[1] ? result.data[1].id : 0;
-
-            newTicketId = lastId + 1;
-
-            let newTicketIdSpan = document.getElementById("new-ticket-id");
-
-            newTicketIdSpan.textContent = newTicketId;
-
             result.data.forEach((ticket) => {
                 let element = document.createElement("div");
 
-                element.innerHTML = `${ticket.id} - ${ticket.code} - ${ticket.trainnumber} - ${ticket.traindate}`;
+                element.innerHTML = `${ticket.code} - ${ticket.trainnumber} - ${ticket.traindate}`;
 
                 oldTickets.appendChild(element);
             });
