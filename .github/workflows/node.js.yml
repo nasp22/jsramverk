@@ -1,3 +1,4 @@
+
 name: Node.js CI
 on:
   push:
@@ -17,8 +18,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12.x, 14.x, 16.x]
-        mongodb-version: ['4.2', '4.4', '5.0']
+        node-version: [18.x, 20.x]
+        mongodb-version: ['5.0', 6.0]
 
     steps:
     - uses: actions/checkout@v3
