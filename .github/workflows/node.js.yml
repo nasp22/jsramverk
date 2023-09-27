@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "N-Add_Secrets_actions" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "N-Add_Secrets_actions" ]
 
 defaults:
   run:
