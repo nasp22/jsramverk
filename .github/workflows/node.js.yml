@@ -1,10 +1,14 @@
 name: Node.js CI
+env:
+  TRAFIKVERKET_API_KEY: ${{ secrets.TRAFIKVERKET_API_KEY }}
+  MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+  NODE_ENV: ${{ secrets.NODE_ENV }}
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "N-Actions_test" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "N-Actions_test" ]
 
 defaults:
   run:
@@ -18,15 +22,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12.x, 14.x, 16.x]
-        mongodb-version: ['4.2', '4.4', '5.0']
+        node-version: [18.x, 20.x]
+        mongodb-version: ['5.0', 6.0]
 
     steps:
     - uses: actions/checkout@v3
-      env: 
-        TRAFIKVERKET_API_KEY : ${{ secrets.TRAFIKVERKET_API_KEY }}
-        MONGODB_PASSWORD : ${{ secrets.MONGODB_PASSWORD }}
-        NODE_ENV : ${{ secrets.NODE_ENV }}
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
