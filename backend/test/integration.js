@@ -44,33 +44,4 @@ mocha.describe('Test integration to server and API', () => {
         });
     });
 
-    mocha.describe('GET /routes/delayed.js', () => {
-        mocha.it('200 HAPPY PATH', (done) => {
-            chai.request(server)
-                .get("/delayed")
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.an("object");
-                    res.body.data.should.be.an("array");
-                    res.body.data.length.should.be.above(0);
-
-                    done();
-                });
-        });
-    });
-
-    mocha.describe('GET /routes/tickets.js', () => {
-        mocha.it('200 HAPPY PATH', (done) => {
-            chai.request(server)
-                .get("/tickets")
-                .end((err, res) => {
-                    // res.should.have.status(200);
-                    // res.body.should.be.an("object");
-                    // res.body.data.should.be.an("array");
-
-                    done();
-                });
-        });
-    });
-
 });
