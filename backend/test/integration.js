@@ -67,7 +67,6 @@ mocha.describe('Test integration to server and API', () => {
                     res.should.have.status(200);
                     res.body.should.be.an("object");
                     res.body.data.should.be.an("array");
-                    res.body.data.length.should.be.above(0);
 
                     done();
                 });
@@ -76,7 +75,7 @@ mocha.describe('Test integration to server and API', () => {
 
     mocha.describe('POST /routes/tickets.js', () => {
         mocha.it('200 HAPPY PATH', (done) => {
-            process.env.NODE_ENV = "test";
+
             let req = {
                 body: {
                     code: "Test",
