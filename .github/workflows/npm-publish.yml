@@ -1,0 +1,42 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+defaults:
+  run:
+    working-directory: ./backend
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        mongodb-version: ['4.2', '4.4', '5.0']
+
+    steps:
+    - uses: actions/checkout@v3
+      env: 
+        TRAFIKVERKET_API_KEY : ${{ secrets.TRAFIKVERKET_API_KEY }}
+        MONGODB_PASSWORD : ${{ secrets.MONGODB_PASSWORD }}
+        NODE_ENV : ${{ secrets.NODE_ENV }}
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.7.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+
+    - run: npm install
+    - run: npm test
