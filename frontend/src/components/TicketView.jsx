@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import config from '../config.js';
+
+const apiUrl = config.backendURL;
 
 const TicketView = ({ selectedTrain, onBackClick }) => {
   const [reasonCodes, setReasonCodes] = useState([]);
@@ -12,7 +15,7 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
   }, []);
 
   const fetchReasonCodes = () => {
-    fetch('http://localhost:1337/codes')
+    fetch(`${apiUrl}/codes`)
       .then((response) => response.json())
       .then((result) => {
         setReasonCodes(result.data);
@@ -21,7 +24,7 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
   };
 
   const fetchTicketId = () => {
-    fetch('http://localhost:1337/tickets')
+    fetch(`${apiUrl}/tickets`)
       .then((response) => response.json())
       .then((result) => {
         const lastId = result.data[1] ? result.data[1].id : 0;
@@ -31,7 +34,7 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
   };
 
   const fetchExistingTickets = () => {
-    fetch('http://localhost:1337/tickets')
+    fetch(`${apiUrl}/tickets`)
       .then((response) => response.json())
       .then((result) => {
         setExistingTickets(result.data);
@@ -64,7 +67,7 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
       traindate: selectedTrain.EstimatedTimeAtLocation.substring(0, 10),
     };
 
-    fetch('http://localhost:1337/tickets', {
+    fetch(`${apiUrl}/tickets`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

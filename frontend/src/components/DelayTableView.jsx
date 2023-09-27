@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 // import Map from './Map';
+import config from '../config.js';
+
+const apiUrl = config.backendURL;
 
 const DelayTableView = ({ onTrainClick }) => {
   const [delayedData, setDelayedData] = useState([]);
@@ -9,7 +12,7 @@ const DelayTableView = ({ onTrainClick }) => {
   }, []);
 
   const fetchDelayedData = () => {
-    fetch('http://localhost:1337/delayed')
+    fetch(`${apiUrl}/delayed`)
       .then((response) => response.json())
       .then((data) => setDelayedData(data.data))
       .catch((error) => console.error('Error fetching delayed data:', error));
