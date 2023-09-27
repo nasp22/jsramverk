@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "N-Add_Secrets_actions" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "N-Add_Secrets_actions" ]
+    branches: [ "main" ]
 
 defaults:
   run:
@@ -23,6 +23,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -34,12 +35,9 @@ jobs:
         mongodb-version: ${{ matrix.mongodb-version }}
 
     - run: npm install
-
-    - name: Test Backend
+    - run: npm test
       env:
         TRAFIKVERKET_API_KEY: ${{ secrets.TRAFIKVERKET_API_KEY }}
         MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
         NODE_ENV: ${{ secrets.NODE_ENV }}
-      run: npm test
-    
 
