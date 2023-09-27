@@ -1,5 +1,8 @@
 name: Node.js CI
-
+env:
+  TRAFIKVERKET_API_KEY: ${{ secrets.TRAFIKVERKET_API_KEY }}
+  MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+  NODE_ENV: ${{ secrets.NODE_ENV }}
 on:
   push:
     branches: [ "N-Add_secrets_actions" ]
@@ -35,10 +38,6 @@ jobs:
         mongodb-version: ${{ matrix.mongodb-version }}
 
     - run: npm install
-
     - run: npm test
-      env:
-        TRAFIKVERKET_API_KEY: ${{ secrets.TRAFIKVERKET_API_KEY }}
-        MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
-        NODE_ENV: ${{ secrets.NODE_ENV }}
+
 
