@@ -1,3 +1,30 @@
+
+Skip to content
+
+    nasp22
+    /
+    jsramverk
+
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+
+    Settings
+
+Node.js CI
+. #71
+
+Jobs
+
+Run details
+
+Workflow file for this run
+.github/workflows/node.js.yml at 8dac76f
 name: Node.js CI
 on:
   push:
@@ -17,8 +44,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12.x, 14.x, 16.x]
-        mongodb-version: ['4.2', '4.4', '5.0']
+        node-version: [18.x, 20.x]
+        mongodb-version: ['5.0', 6.0]
 
     steps:
     - uses: actions/checkout@v3
