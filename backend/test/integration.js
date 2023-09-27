@@ -7,7 +7,7 @@ const mocha = require('mocha');
 chai.should();
 chai.use(chaiHttp);
 
-var currentdate = new Date();
+// var currentdate = new Date();
 // var datetime = currentdate.getDate() + "/"
 //                 + (currentdate.getMonth()+1)  + "/"
 //                 + currentdate.getFullYear() + " @ "
@@ -43,5 +43,4 @@ mocha.describe('Test integration to server and API', () => {
                 });
         });
     });
-
 });
