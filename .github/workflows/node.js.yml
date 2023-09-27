@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "GitHub-Actions" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "GitHub-Actions" ]
 
 defaults:
   run:
