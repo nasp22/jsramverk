@@ -23,10 +23,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      env: 
-        TRAFIKVERKET_API_KEY : ${{ secrets.TRAFIKVERKET_API_KEY }}
-        MONGODB_PASSWORD : ${{ secrets.MONGODB_PASSWORD }}
-        NODE_ENV : ${{ secrets.NODE_ENV }}
+      env:
+        MONGODB_DB_NAME: actions-test
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -37,6 +35,7 @@ jobs:
       uses: supercharge/mongodb-github-action@1.7.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
+        mongodb-database: ${{ env.MONGODB_DB_NAME }}
 
     - run: npm install
     - run: npm test
