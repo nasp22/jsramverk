@@ -39,9 +39,9 @@ jobs:
         mongodb-version: ${{ matrix.mongodb-version }}
 
     - run: npm install
-    - run: npm test
-
     -  run: echo "$TRAFIKVERKET_API_KEY"
-    -  run: echo "MONGODB_PASSWORD"
-    -  run: echo "NODE_ENV"
+    -  run: echo "$MONGODB_PASSWORD"
+    -  run: echo "$NODE_ENV"
+    
+    - run: npm test
 
