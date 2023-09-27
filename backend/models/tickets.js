@@ -29,7 +29,6 @@ const tickets = {
         await client.close();
 
         // Print all documents to the console
-        console.log(allTickets);
         return res.json({
             data: allTickets
         });
@@ -57,7 +56,6 @@ const tickets = {
         await client.close();
 
         // Print all documents to the console
-        console.log(newTicket);
         return res.json({
             data: newTicket
         });

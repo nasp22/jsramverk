@@ -5,9 +5,7 @@ const database = {
         let dsn = `mongodb+srv://Bruffe:${process.env.MONGODB_PASSWORD}@jsramverk \
         .cpm6rtk.mongodb.net/?retryWrites=true&w=majority`;
 
-        console.log(process.env.MONGODB_DB_NAME);
         if (process.env.MONGODB_DB_NAME) {
-            console.log("GitHub Actions env variable accessed");
             dsn = "mongodb://localhost:27017";
         }
 
