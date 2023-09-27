@@ -35,6 +35,7 @@ jobs:
         mongodb-version: ${{ matrix.mongodb-version }}
 
     - run: npm install
+
     - run: npm test
       env:
         TRAFIKVERKET_API_KEY: ${{ secrets.TRAFIKVERKET_API_KEY }}
