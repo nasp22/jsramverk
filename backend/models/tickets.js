@@ -4,7 +4,11 @@ let dbName = "trains";
 
 if (process.env.NODE_ENV === 'test') {
     dbName = "trains-test";
+} else if (process.env.MONGODB_DB_NAME) {
+    console.log("GitHub Actions env variable accessed");
+    dbName = process.env.MONGODB_DB_NAME;
 }
+dbName = "actions-test"; // test
 
 const tickets = {
     getTickets: async function getTickets(req, res) {
