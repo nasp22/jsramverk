@@ -33,6 +33,8 @@ jobs:
       uses: supercharge/mongodb-github-action@1.7.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
+      env:
+        MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
 
     - run: npm install
     - run: npm test
