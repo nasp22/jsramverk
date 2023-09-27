@@ -2,6 +2,9 @@ import io from 'socket.io-client'
 import React, { useEffect, useRef } from 'react';
 import * as L from 'leaflet';
 // import markerImg from '../icon/location.png'
+import config from '../config.js';
+
+const apiUrl = config.backendURL;
 
 const Map = () => {
   const mapRef = useRef(null);
@@ -22,7 +25,7 @@ const Map = () => {
   //     shadowSize:   [50, 64],
   // });
 
-    const socket = io("http://localhost:1337");
+    const socket = io(`${apiUrl}`);
 
     socket.on("message", (data) => {
       if (markers.current.hasOwnProperty(data.trainnumber)) {
