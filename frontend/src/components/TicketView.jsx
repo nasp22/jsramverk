@@ -49,7 +49,7 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
 
   const renderExistingTickets = () => {
     return existingTickets.map((ticket) => (
-      <div key={ticket.id}>
+      <div key={ticket._id}>
         {ticket.id} - {ticket.code} - {ticket.trainnumber} - {ticket.traindate}
       </div>
     ));
