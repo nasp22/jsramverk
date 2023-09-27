@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "G-patch-mongodb-actions" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "G-patch-mongodb-actions" ]
+    branches: [ "main" ]
 
 defaults:
   run:
