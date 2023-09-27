@@ -1,19 +1,19 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app.js');
-const tickets = require('../models/tickets.js');
+// const tickets = require('../models/tickets.js');
 const mocha = require('mocha');
 
 chai.should();
 chai.use(chaiHttp);
 
 var currentdate = new Date();
-var datetime = currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/"
-                + currentdate.getFullYear() + " @ "
-                + currentdate.getHours() + ":"
-                + currentdate.getMinutes() + ":"
-                + currentdate.getSeconds();
+// var datetime = currentdate.getDate() + "/"
+//                 + (currentdate.getMonth()+1)  + "/"
+//                 + currentdate.getFullYear() + " @ "
+//                 + currentdate.getHours() + ":"
+//                 + currentdate.getMinutes() + ":"
+//                 + currentdate.getSeconds();
 
 mocha.describe('Test integration to server and API', () => {
     mocha.describe('START /app/httpServer', () => {
