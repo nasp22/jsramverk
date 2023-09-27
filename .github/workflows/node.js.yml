@@ -2,17 +2,6 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "N-Add_Secrets_actions" ]
-  pull_request:
-    branches: [ "N-Add_Secrets_actions" ]
-
-defaults:
-  run:
-    working-directory: ./backend
-name: Node.js CI
-
-on:
-  push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
