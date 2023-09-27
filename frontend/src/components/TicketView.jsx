@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import config from '../config.js';
+import config from '../../config.js';
 
 const apiUrl = config.backendURL;
 

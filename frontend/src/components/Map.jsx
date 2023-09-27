@@ -2,7 +2,7 @@ import io from 'socket.io-client'
 import React, { useEffect, useRef } from 'react';
 import * as L from 'leaflet';
 // import markerImg from '../icon/location.png'
-import config from '../config.js';
+import config from '../../config.js';
 
 const apiUrl = config.backendURL;
 
