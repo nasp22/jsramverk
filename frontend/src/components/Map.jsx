@@ -4,7 +4,8 @@ import * as L from 'leaflet';
 // import markerImg from '../icon/location.png'
 import config from '../config.js';
 
-const apiUrl = config.backendURL;
+const apiUrl = config;
+console.log(`utskrift apiURL i map.jsx = ${apiUrl}`)
 
 const Map = () => {
   const mapRef = useRef(null);
