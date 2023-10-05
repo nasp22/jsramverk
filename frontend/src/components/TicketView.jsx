@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import config from '../config.js';
 
-const apiUrl = config.backendURL;
+const apiUrl = config;
+console.log(`utskrift apiURL i ticketview.jsx = ${apiUrl}`)
 
 const TicketView = ({ selectedTrain, onBackClick }) => {
   const [reasonCodes, setReasonCodes] = useState([]);
@@ -84,9 +85,9 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
   return (
     <div className="ticket-container">
       <div className="ticket">
-        <a href="tickets" onClick={onBackClick}>
+        <button href="" onClick={onBackClick}>
           Tillbaka
-        </a>
+        </button>
         <h1>Nytt ärende #{newTicketId}</h1>
         <form onSubmit={handleFormSubmit}>
           <label>Orsakskod</label>

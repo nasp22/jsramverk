@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 // import Map from './Map';
 import config from '../config.js';
 
-const apiUrl = config.backendURL;
+const apiUrl = config;
+console.log(`utskrift apiURL i delaytableview.jsx = ${apiUrl}`)
 
 const DelayTableView = ({ onTrainClick }) => {
   const [delayedData, setDelayedData] = useState([]);
