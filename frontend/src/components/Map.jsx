@@ -11,7 +11,7 @@ const Map = ({ delayedData, resetMap, selectedTrain }) => {
   const markers = useRef({});
 
   useEffect(() => {
-    const map = L.map('map').setView([62.173276, 14.942265], 5);
+    const map = L.map('map').setView([62.173276, 14.942265], 6);
     mapRef.current = map;
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -21,7 +21,7 @@ const Map = ({ delayedData, resetMap, selectedTrain }) => {
 
     const myMarker = L.icon({
       iconUrl: markerImg,
-      iconSize: [38, 38],
+      iconSize: [45, 45],
     });
 
     const socket = io(`${apiUrl}`);

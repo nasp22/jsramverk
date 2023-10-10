@@ -42,10 +42,15 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
   const renderExistingTickets = () => {
     return existingTickets.map((ticket) => (
       <tr key={ticket._id}>
-        <td>{ticket._id}</td>
         <td>{ticket.code}</td>
         <td>{ticket.trainnumber}</td>
         <td>{ticket.traindate}</td>
+        <td>
+          <i class="material-icons button edit">edit</i>
+        </td>
+        <td>
+          <i class="material-icons button delete">delete</i>
+        </td>
       </tr>
     ));
   };
@@ -98,10 +103,11 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
         <table className="ticket-table">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Orsakskod</th>
               <th>Tågnummer</th>
               <th>Datum</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
