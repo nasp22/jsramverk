@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import React, { useEffect, useRef } from 'react';
 import * as L from 'leaflet';
-// import markerImg from '../icon/location.png'
+import markerImg from '../icon/location.png'
 import config from '../config.js';
 
 const apiUrl = config;
@@ -20,11 +20,10 @@ const Map = () => {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-  //   var myMarker = L.icon({
-  //     iconUrl: markerImg,
-  //     iconSize:     [38, 95],
-  //     shadowSize:   [50, 64],
-  // });
+    var myMarker = L.icon({
+      iconUrl: markerImg,
+      iconSize:     [38, 38],
+  });
 
     const socket = io(`${apiUrl}`);
 
@@ -33,7 +32,7 @@ const Map = () => {
         const marker = markers.current[data.trainnumber];
         marker.setLatLng(data.position);
       } else {
-        const marker = L.marker(data.position).bindPopup(data.trainnumber).addTo(map);
+        const marker = L.marker(data.position, {icon: myMarker}).bindPopup(data.trainnumber).addTo(map);
         markers.current[data.trainnumber] = marker;
       }
     });
