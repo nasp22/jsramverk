@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import Map from './Map';
 import config from '../config.js';
 
 const apiUrl = config;
@@ -51,7 +50,6 @@ const DelayTableView = ({ onTrainClick }) => {
       </tbody>
     </table>
 </div>
-    {/* <Map /> */}
     </>
   );
 };

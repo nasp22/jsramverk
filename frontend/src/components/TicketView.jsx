@@ -6,12 +6,10 @@ console.log(`utskrift apiURL i ticketview.jsx = ${apiUrl}`)
 
 const TicketView = ({ selectedTrain, onBackClick }) => {
   const [reasonCodes, setReasonCodes] = useState([]);
-  const [newTicketId, setNewTicketId] = useState(0);
   const [existingTickets, setExistingTickets] = useState([]);
 
   useEffect(() => {
     fetchReasonCodes();
-    fetchTicketId();
     fetchExistingTickets();
   }, []);
 
@@ -22,16 +20,6 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
         setReasonCodes(result.data);
       })
       .catch((error) => console.error('Error fetching reason codes:', error));
-  };
-
-  const fetchTicketId = () => {
-    fetch(`${apiUrl}/tickets`)
-      .then((response) => response.json())
-      .then((result) => {
-        const lastId = result.data[1] ? result.data[1].id : 0;
-        setNewTicketId(lastId + 1);
-      })
-      .catch((error) => console.error('Error fetching ticket ID:', error));
   };
 
   const fetchExistingTickets = () => {
@@ -53,11 +41,15 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
 
   const renderExistingTickets = () => {
     return existingTickets.map((ticket) => (
-      <div key={ticket._id}>
-        {ticket.id} - {ticket.code} - {ticket.trainnumber} - {ticket.traindate}
-      </div>
+      <tr key={ticket._id}>
+        <td>{ticket._id}</td>
+        <td>{ticket.code}</td>
+        <td>{ticket.trainnumber}</td>
+        <td>{ticket.traindate}</td>
+      </tr>
     ));
   };
+
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -77,7 +69,7 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
     })
       .then((response) => response.json())
       .then(() => {
-        fetchExistingTickets(); // Uppdatera befintliga ärenden efter att ett nytt ärende skapats
+        fetchExistingTickets();
       })
       .catch((error) => console.error('Error creating new ticket:', error));
   };
@@ -88,7 +80,7 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
         <button href="" onClick={onBackClick}>
           Tillbaka
         </button>
-        <h1>Nytt ärende #{newTicketId}</h1>
+        <h1>Nytt ärende för tåg {selectedTrain.OperationalTrainNumber}</h1>
         <form onSubmit={handleFormSubmit}>
           <label>Orsakskod</label>
           <br />
@@ -103,7 +95,19 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
       <br />
       <div className="old-tickets">
         <h2>Befintliga ärenden</h2>
-        {renderExistingTickets()}
+        <table className="ticket-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Orsakskod</th>
+              <th>Tågnummer</th>
+              <th>Datum</th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderExistingTickets()}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -5,9 +5,8 @@ import markerImg from '../icon/location.png';
 import config from '../config.js';
 
 const apiUrl = config;
-console.log(`utskrift apiURL i map.jsx = ${apiUrl}`);
 
-const Map = ({ delayedData }) => {
+const Map = ({ delayedData, resetMap, selectedTrain }) => {
   const mapRef = useRef(null);
   const markers = useRef({});
 
@@ -20,29 +19,51 @@ const Map = ({ delayedData }) => {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    var myMarker = L.icon({
+    const myMarker = L.icon({
       iconUrl: markerImg,
       iconSize: [38, 38],
     });
 
     const socket = io(`${apiUrl}`);
 
+    Object.values(markers.current).forEach((marker) => map.removeLayer(marker));
+    markers.current = {};
+
+
     socket.on('message', (data) => {
-      if (delayedData.find((item) => item.OperationalTrainNumber === data.trainnumber)) {
-        if (markers.current.hasOwnProperty(data.trainnumber)) {
-          const marker = markers.current[data.trainnumber];
-          marker.setLatLng(data.position);
-        } else {
-          const marker = L.marker(data.position, { icon: myMarker }).bindPopup(data.trainnumber).addTo(map);
-          markers.current[data.trainnumber] = marker;
-        }
+
+      if (selectedTrain) {
+        if (data.trainnumber === selectedTrain.OperationalTrainNumber) {
+          if (markers.current.hasOwnProperty(data.trainnumber)) {
+            const marker = markers.current[data.trainnumber];
+            marker.setLatLng(data.position);
+          } else {
+            const marker = L.marker(data.position, { icon: myMarker }).bindPopup(data.trainnumber).addTo(map);
+            markers.current[data.trainnumber] = marker;
+          }
       }
-    });
+    }
+
+    if (selectedTrain === null) {
+      delayedData.forEach((train) => {
+        if (data.trainnumber === train.OperationalTrainNumber) {
+          if (markers.current.hasOwnProperty(data.trainnumber)) {
+            const marker = markers.current[data.trainnumber];
+            marker.setLatLng(data.position);
+          } else {
+            const marker = L.marker(data.position, { icon: myMarker }).bindPopup(data.trainnumber).addTo(map);
+            markers.current[data.trainnumber] = marker;
+          }
+        }
+      })
+    }
+
+  });
 
     return () => {
       map.remove();
     };
-  }, [delayedData]);
+  }, [delayedData, resetMap, selectedTrain]);
 
   return <div id="map" className="map"></div>;
 };

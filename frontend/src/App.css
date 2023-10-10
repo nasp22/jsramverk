@@ -135,10 +135,15 @@ p {
 .table-container {
   width: 100%;
   overflow: auto;
-  padding: 20px; /* Justera enligt behov */
+  padding: 20px;
 }
 
 .train-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-table {
   width: 100%;
   border-collapse: collapse;
 }
