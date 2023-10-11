@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import config from '../config.js';
 
 const apiUrl = config;
-console.log(`utskrift apiURL i delaytableview.jsx = ${apiUrl}`)
+// console.log(`utskrift apiURL i delaytableview.jsx = ${apiUrl}`)
 
 const DelayTableView = ({ onTrainClick }) => {
   const [delayedData, setDelayedData] = useState([]);
@@ -48,8 +48,8 @@ const DelayTableView = ({ onTrainClick }) => {
             </td>
             <td>
               <div>
-                {item.FromLocation ? `${item.FromLocation[0].LocationName} / ` : ''}
-                {item.ToLocation ? item.ToLocation[0].LocationName : ''}
+                {item.FromLocation ? `${item.FromLocation[0].LocationName} / ` : '- '}
+                {item.ToLocation ? item.ToLocation[0].LocationName : '/ -'}
               </div>
             </td>
             <td className="delay">{outputDelay(item)}</td>

@@ -24,15 +24,13 @@ const Map = ({ delayedData, resetMap, selectedTrain }) => {
       iconSize: [45, 45],
     });
 
-    const socket = io(`${apiUrl}`);
+    const socket = io(`${apiUrl}`, {secure: false});
 
     Object.values(markers.current).forEach((marker) => map.removeLayer(marker));
     markers.current = {};
 
-    console.log(selectedTrain)
 
     socket.on('message', (data) => {
-
       if (selectedTrain) {
         if (data.trainnumber === selectedTrain.OperationalTrainNumber) {
           if (markers.current.hasOwnProperty(data.trainnumber)) {
@@ -45,7 +43,7 @@ const Map = ({ delayedData, resetMap, selectedTrain }) => {
       }
     }
 
-    else if (selectedTrain === null) {
+    if (!selectedTrain) {
       delayedData.forEach((train) => {
         if (data.trainnumber === train.OperationalTrainNumber) {
           if (markers.current.hasOwnProperty(data.trainnumber)) {
