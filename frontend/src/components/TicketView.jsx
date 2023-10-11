@@ -86,10 +86,6 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
           Tillbaka
         </button>
         <h1>Nytt ärende för tåg {selectedTrain.OperationalTrainNumber}</h1>
-        <h3> Till / Från: </h3>
-        <p>{selectedTrain.FromLocation ? `${selectedTrain.FromLocation[0].LocationName} / ` : 'Uppfifter Saknas'}
-                {selectedTrain.ToLocation ? selectedTrain.ToLocation[0].LocationName : ', kan ej visas på kartan'}
-        </p>
         <br></br>
         <form onSubmit={handleFormSubmit}>
           <label>Orsakskod</label>
@@ -97,8 +93,8 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
           <select name="reasonCode" id="reason-code">
             {renderReasonCodeOptions()}
           </select>
-          <br />
-          <br />
+          <br/>
+          <br/>
           <input type="submit" value="Skapa nytt ärende" />
         </form>
       </div>
