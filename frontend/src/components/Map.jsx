@@ -29,6 +29,7 @@ const Map = ({ delayedData, resetMap, selectedTrain }) => {
     Object.values(markers.current).forEach((marker) => map.removeLayer(marker));
     markers.current = {};
 
+    console.log(selectedTrain)
 
     socket.on('message', (data) => {
 
@@ -44,7 +45,7 @@ const Map = ({ delayedData, resetMap, selectedTrain }) => {
       }
     }
 
-    if (selectedTrain === null) {
+    else if (selectedTrain === null) {
       delayedData.forEach((train) => {
         if (data.trainnumber === train.OperationalTrainNumber) {
           if (markers.current.hasOwnProperty(data.trainnumber)) {
