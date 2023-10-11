@@ -46,10 +46,10 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
         <td>{ticket.trainnumber}</td>
         <td>{ticket.traindate}</td>
         <td>
-          <i class="material-icons button edit">edit</i>
+          <i className="material-icons button edit">edit</i>
         </td>
         <td>
-          <i class="material-icons button delete">delete</i>
+          <i className="material-icons button delete">delete</i>
         </td>
       </tr>
     ));
