@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import Map from './Map';
 import config from '../config.js';
 
 const apiUrl = config;
-console.log(`utskrift apiURL i delaytableview.jsx = ${apiUrl}`)
+// console.log(`utskrift apiURL i delaytableview.jsx = ${apiUrl}`)
 
 const DelayTableView = ({ onTrainClick }) => {
   const [delayedData, setDelayedData] = useState([]);
@@ -28,9 +27,15 @@ const DelayTableView = ({ onTrainClick }) => {
 
   return ( <>
   <div className="delayed">
-    <h1>Försenade tåg</h1>
+  <h1>Försenade tåg</h1>
     <table className="train-table">
       <tbody>
+      <tr className="train-columns">
+      <td>Tågnummer</td>
+      <td>Nuvarande station</td>
+      <td>Från / Till</td>
+      <td>Försenat (min)</td>
+      </tr>
         {delayedData.map((item, index) => (
           <tr
             key={index}
@@ -40,9 +45,11 @@ const DelayTableView = ({ onTrainClick }) => {
             <td className="train-number">{item.OperationalTrainNumber}</td>
             <td className="current-station">
               <div>{item.LocationSignature}</div>
+            </td>
+            <td>
               <div>
-                {item.FromLocation ? `${item.FromLocation[0].LocationName} -> ` : ''}
-                {item.ToLocation ? item.ToLocation[0].LocationName : ''}
+                {item.FromLocation ? `${item.FromLocation[0].LocationName} / ` : '- '}
+                {item.ToLocation ? item.ToLocation[0].LocationName : '/ -'}
               </div>
             </td>
             <td className="delay">{outputDelay(item)}</td>
@@ -51,7 +58,6 @@ const DelayTableView = ({ onTrainClick }) => {
       </tbody>
     </table>
 </div>
-    {/* <Map /> */}
     </>
   );
 };
