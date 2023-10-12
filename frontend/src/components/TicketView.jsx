@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import config from '../config.js';
 
 const apiUrl = config;
-console.log(`utskrift apiURL i ticketview.jsx = ${apiUrl}`)
 
 const TicketView = ({ selectedTrain, onBackClick }) => {
   const [reasonCodes, setReasonCodes] = useState([]);
-  const [newTicketId, setNewTicketId] = useState(0);
   const [existingTickets, setExistingTickets] = useState([]);
+  const [editedTicket, setEditedTicket] = useState(null);
 
   useEffect(() => {
     fetchReasonCodes();
-    fetchTicketId();
     fetchExistingTickets();
   }, []);
 
@@ -22,16 +20,6 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
         setReasonCodes(result.data);
       })
       .catch((error) => console.error('Error fetching reason codes:', error));
-  };
-
-  const fetchTicketId = () => {
-    fetch(`${apiUrl}/tickets`)
-      .then((response) => response.json())
-      .then((result) => {
-        const lastId = result.data[1] ? result.data[1].id : 0;
-        setNewTicketId(lastId + 1);
-      })
-      .catch((error) => console.error('Error fetching ticket ID:', error));
   };
 
   const fetchExistingTickets = () => {
@@ -51,35 +39,68 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
     ));
   };
 
-  const renderExistingTickets = () => {
-    return existingTickets.map((ticket) => (
-      <div key={ticket._id}>
-        {ticket.id} - {ticket.code} - {ticket.trainnumber} - {ticket.traindate}
-      </div>
-    ));
+  const handleEditClick = (ticket) => {
+    setEditedTicket(ticket);
+  };
+
+  const handleCancelEdit = () => {
+    setEditedTicket(null);
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    const newTicket = {
-      code: event.target.reasonCode.value,
-      trainnumber: selectedTrain.OperationalTrainNumber,
-      traindate: selectedTrain.EstimatedTimeAtLocation.substring(0, 10),
-    };
+    const formData = new FormData(event.target);
+    const code = formData.get('reasonCode');
 
-    fetch(`${apiUrl}/tickets`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newTicket),
-    })
-      .then((response) => response.json())
-      .then(() => {
-        fetchExistingTickets(); // Uppdatera befintliga ärenden efter att ett nytt ärende skapats
+    if (editedTicket) {
+      // Uppdatera befintligt ärende
+      const updatedTicket = {
+        code,
+        trainnumber: editedTicket.trainnumber,
+        traindate: editedTicket.traindate,
+        trainchange: new Date().toISOString(),
+      };
+
+      fetch(`${apiUrl}/tickets/${editedTicket._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedTicket),
       })
-      .catch((error) => console.error('Error creating new ticket:', error));
+        .then((response) => response.json())
+        .then(() => {
+          fetchExistingTickets();
+          setEditedTicket(null);
+        })
+        .catch((error) => console.error('Error updating ticket:', error));
+    } else {
+      // Om nytt ärende:
+      const newTicket = {
+        code,
+        trainnumber: selectedTrain.OperationalTrainNumber,
+        traindate: selectedTrain.EstimatedTimeAtLocation.substring(0, 10),
+      };
+
+      fetch(`${apiUrl}/tickets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTicket),
+      })
+        .then((response) => response.json())
+        .then(() => {
+          fetchExistingTickets(); // Uppdatera listan över befintliga ärenden
+        })
+        .catch((error) => console.error('Error creating new ticket:', error));
+    }
+  };
+
+  const handleDeleteClick = (ticketId) => {
+    // Implement delete logic here using ticketId
+    console.log('Deleting ticket with ID:', ticketId);
   };
 
   return (
@@ -88,9 +109,11 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
         <button href="" onClick={onBackClick}>
           Tillbaka
         </button>
-        <h1>Nytt ärende #{newTicketId}</h1>
+        <div  className="add_form">
+        <h1>Nytt ärende för tåg {selectedTrain.OperationalTrainNumber}</h1>
         <form onSubmit={handleFormSubmit}>
           <label>Orsakskod</label>
+          <br />
           <br />
           <select name="reasonCode" id="reason-code">
             {renderReasonCodeOptions()}
@@ -100,10 +123,51 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
           <input type="submit" value="Skapa nytt ärende" />
         </form>
       </div>
-      <br />
+      <br /></div>
       <div className="old-tickets">
         <h2>Befintliga ärenden</h2>
-        {renderExistingTickets()}
+        {editedTicket ? (
+          <form onSubmit={handleFormSubmit} className="edit_form">
+            <label>Uppdatera orsakskod för tåg: {editedTicket.trainnumber}</label>
+            <br />
+            <br />
+            <select name="reasonCode" id="reason-code" defaultValue={editedTicket.code}>
+              {renderReasonCodeOptions()}
+            </select>
+            <br />
+            <br />
+            <input type="submit" value="Uppdatera ärende" />
+            <button onClick={handleCancelEdit}>Avbryt</button>
+          </form>
+        ) : null}
+        <table className="ticket-table">
+          <thead>
+            <tr>
+              <th>Orsakskod</th>
+              <th>Tågnummer</th>
+              <th>Datum</th>
+              <th>Senast ändrad</th>
+              <th>Ändra</th>
+              <th>Radera</th>
+            </tr>
+          </thead>
+          <tbody>
+            {existingTickets.map((ticket) => (
+              <tr key={ticket._id}>
+                <td>{ticket.code}</td>
+                <td>{ticket.trainnumber}</td>
+                <td>{ticket.traindate}</td>
+                <td>{ticket.trainchange}</td>
+                <td>
+                  <button onClick={() => handleEditClick(ticket)}>Redigera</button>
+                </td>
+                <td>
+                  <button onClick={() => handleDeleteClick(ticket._id)}>Radera</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
