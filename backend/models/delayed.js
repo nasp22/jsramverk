@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 const delayed = {
-    getDelayedTrains: function getDelayedTrains(req, res) {
+    getDelayedTrains: async function getDelayedTrains() {
         const query = `<REQUEST>
                   <LOGIN authenticationkey="${process.env.TRAFIKVERKET_API_KEY}" />
                   <QUERY objecttype="TrainAnnouncement" orderby='AdvertisedTimeAtLocation'
@@ -33,19 +33,18 @@ const delayed = {
             </REQUEST>`;
 
 
-        fetch(
-            "https://api.trafikinfo.trafikverket.se/v2/data.json", {
+        try {
+            const response = await fetch("https://api.trafikinfo.trafikverket.se/v2/data.json", {
                 method: "POST",
                 body: query,
                 headers: { "Content-Type": "text/xml" }
-            }
-        ).then(function(response) {
-            return response.json();
-        }).then(function(result) {
-            return res.json({
-                data: result.RESPONSE.RESULT[0].TrainAnnouncement
             });
-        });
+            const result = await response.json();
+
+            return result.RESPONSE.RESULT[0].TrainAnnouncement;
+        } catch (error) {
+            throw new Error("Failed to fetch delayed trains data");
+        }
     }
 };
 

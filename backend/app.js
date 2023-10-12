@@ -9,6 +9,13 @@ const tickets = require('./routes/tickets.js');
 const codes = require('./routes/codes.js');
 const app = express();
 const httpServer = require("http").createServer(app);
+const visual = true;
+const { graphqlHTTP } = require('express-graphql');
+const {
+    GraphQLSchema
+} = require("graphql");
+
+const RootQueryType = require("./graphql/root.js");
 
 app.use(cors());
 app.options('*', cors());
@@ -20,7 +27,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 const io = require("socket.io")(httpServer, {
     cors: {
-        origin: ["http://localhost:3000", "https://www.student.bth.se"],
+        origin: [
+            "http://localhost:3000",
+            "https://www.student.bth.se",
+            "https://www.student.bth.se:1"
+        ],
         methods: ["GET", "POST"]
     }
 });
@@ -36,6 +47,15 @@ app.get('/', (req, res) => {
 app.use("/delayed", delayed);
 app.use("/tickets", tickets);
 app.use("/codes", codes);
+
+const schema = new GraphQLSchema({
+    query: RootQueryType
+});
+
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: visual, // Visual är satt till true under utveckling
+}));
 
 const server = httpServer.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 const tickets = {
-    getTickets: async function getTickets(req, res) {
+    getTickets: async function getTickets() {
         // Access a MongoClient object
         const client = await database.accessDb();
 
@@ -28,13 +28,11 @@ const tickets = {
         // Close the database connection
         await client.close();
 
-        // Print all documents to the console
-        return res.json({
-            data: allTickets
-        });
+        // Return all documents
+        return allTickets;
     },
 
-    createTicket: async function createTicket(req, res) {
+    createTicket: async function createTicket(req) {
         // Access a MongoClient object
         const client = await database.accessDb();
 
@@ -55,10 +53,8 @@ const tickets = {
         // Close the database connection
         await client.close();
 
-        // Print all documents to the console
-        return res.json({
-            data: newTicket
-        });
+        // Return the new document
+        return newTicket;
     }
 };
 
