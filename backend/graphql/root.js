@@ -8,8 +8,6 @@ const DelayedType = require("./delay.js");
 const TicketType = require("./ticket.js");
 const CodeType = require("./code.js");
 
-// const trainsModel = require("../models/trains.js");
-// const delayedModel = require("../models/delayed.js");
 const delayedModel = require("../models/delayed.js");
 const ticketsModel = require("../models/tickets.js");
 const codesModel = require("../models/codes.js");
@@ -76,7 +74,7 @@ const RootQueryType = new GraphQLObjectType({
             resolve: async function() {
                 return await codesModel.getCodes();
             }
-        },
+        }
     })
 });
 
