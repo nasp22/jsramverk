@@ -12,9 +12,40 @@ const DelayTableView = ({ onTrainClick }) => {
   }, []);
 
   const fetchDelayedData = () => {
-    fetch(`${apiUrl}/delayed`)
+    // fetch(`${apiUrl}/delayed`)
+    fetch(`${apiUrl}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({ query: `
+      { 
+        delays { 
+          ActivityId, 
+          ActivityType, 
+          AdvertisedTimeAtLocation, 
+          AdvertisedTrainIdent
+          Canceled
+          EstimatedTimeAtLocation
+          FromLocation {
+            LocationName
+            Priority
+            Order
+          }
+          LocationSignature
+          OperationalTrainNumber
+          ToLocation {
+            LocationName
+            Priority
+            Order
+          }
+          TrainOwner
+        }
+      }` })
+    })
       .then((response) => response.json())
-      .then((data) => setDelayedData(data.data))
+      .then((data) => setDelayedData(data.data.delays))
       .catch((error) => console.error('Error fetching delayed data:', error));
   };
 

@@ -14,19 +14,49 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
   }, []);
 
   const fetchReasonCodes = () => {
-    fetch(`${apiUrl}/codes`)
+    fetch(`${apiUrl}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({ query: `
+      { 
+        codes {
+          Code
+          Level1Description
+          Level2Description
+          Level3Description
+        }
+      }` })
+    })
       .then((response) => response.json())
       .then((result) => {
-        setReasonCodes(result.data);
+        setReasonCodes(result.data.codes);
       })
       .catch((error) => console.error('Error fetching reason codes:', error));
   };
 
   const fetchExistingTickets = () => {
-    fetch(`${apiUrl}/tickets`)
+    fetch(`${apiUrl}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({ query: `
+      { 
+        tickets {
+          _id,
+          code,
+          trainnumber,
+          traindate
+        }
+      }` })
+    })
       .then((response) => response.json())
       .then((result) => {
-        setExistingTickets(result.data);
+        setExistingTickets(result.data.tickets);
       })
       .catch((error) => console.error('Error fetching existing tickets:', error));
   };
@@ -62,12 +92,29 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
         trainchange: new Date().toISOString(),
       };
 
-      fetch(`${apiUrl}/tickets/${editedTicket._id}`, {
-        method: 'PUT',
+      fetch(`${apiUrl}/graphql`, {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(updatedTicket),
+        body: JSON.stringify({
+          query: `
+            mutation UpdateTicket($_id: String!, $code: String!, $trainnumber: String!, $traindate: String!) {
+              updateTicket(_id: $_id, code: $code, trainnumber: $trainnumber, traindate: $traindate) {
+                _id
+                code
+                trainnumber
+                traindate
+              }
+            }
+          `,
+          variables: {
+            _id: editedTicket._id,
+            code: code,
+            trainnumber: updatedTicket.trainnumber,
+            traindate: updatedTicket.traindate,
+          },
+        })
       })
         .then((response) => response.json())
         .then(() => {
@@ -83,12 +130,29 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
         traindate: selectedTrain.EstimatedTimeAtLocation.substring(0, 10),
       };
 
-      fetch(`${apiUrl}/tickets`, {
+      fetch(`${apiUrl}/graphql`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify(newTicket),
+        body: JSON.stringify({
+          query: `
+            mutation CreateNewTicket($code: String!, $trainnumber: String!, $traindate: String!) {
+              createTicket(code: $code, trainnumber: $trainnumber, traindate: $traindate) {
+                _id
+                code
+                trainnumber
+                traindate
+              }
+            }
+          `,
+          variables: {
+            code: newTicket.code,
+            trainnumber: newTicket.trainnumber,
+            traindate: newTicket.traindate,
+          },
+        })
       })
         .then((response) => response.json())
         .then(() => {
@@ -99,8 +163,36 @@ const TicketView = ({ selectedTrain, onBackClick }) => {
   };
 
   const handleDeleteClick = (ticketId) => {
-    // Implement delete logic here using ticketId
-    console.log('Deleting ticket with ID:', ticketId);
+    const confirmed = window.confirm("Är du säker på att du vill radera detta ärende?");
+
+    if (confirmed) {
+      fetch(`${apiUrl}/graphql`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          query: `
+            mutation DeleteTicket($_id: String!) {
+              deleteTicket(_id: $_id) {
+                _id
+                code
+                trainnumber
+                traindate
+              }
+            }
+          `,
+          variables: {
+            _id: ticketId
+          },
+        })
+      })
+      .then((response) => response.json())
+        .then(() => {
+          fetchExistingTickets(); // Uppdatera listan över befintliga ärenden
+        })
+        .catch((error) => console.error('Error creating new ticket:', error));
+    }
   };
 
   return (
