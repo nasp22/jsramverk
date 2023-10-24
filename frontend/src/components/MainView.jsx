@@ -9,7 +9,7 @@ const apiUrl = config;
 const MainView = () => {
   const [selectedTrain, setSelectedTrain] = useState(null);
   const [delayedData, setDelayedData] = useState([]);
-  const [resetMap, setResetMap] = useState(false);
+  const [rerenderMainView, setRerenderMainView] = useState(false);
 
   useEffect(() => {
     fetchDelayedData();
@@ -23,11 +23,11 @@ const MainView = () => {
         'Accept': 'application/json'
       },
       body: JSON.stringify({ query: `
-      { 
-        delays { 
-          ActivityId, 
-          ActivityType, 
-          AdvertisedTimeAtLocation, 
+      {
+        delays {
+          ActivityId,
+          ActivityType,
+          AdvertisedTimeAtLocation,
           AdvertisedTrainIdent
           Canceled
           EstimatedTimeAtLocation
@@ -54,12 +54,10 @@ const MainView = () => {
 
   const handleTrainClick = (train) => {
     setSelectedTrain(train);
-    setResetMap(false);
   };
 
   const handleBackClick = () => {
-    setSelectedTrain(null);
-    setResetMap(true);
+    setSelectedTrain(null);;
   };
 
   return (
@@ -67,9 +65,9 @@ const MainView = () => {
       {selectedTrain ? (
         <TicketView selectedTrain={selectedTrain} onBackClick={handleBackClick} />
       ) : (
-        <DelayTableView onTrainClick={handleTrainClick} delayedData={delayedData} />
+        <DelayTableView onTrainClick={handleTrainClick} delayedData={delayedData} setDelayedData={setDelayedData} />
       )}
-      <Map delayedData={delayedData} resetMap={resetMap} selectedTrain={selectedTrain} />
+      <Map delayedData={delayedData}  selectedTrain={selectedTrain}  rerenderMainView={rerenderMainView} setRerenderMainView={setRerenderMainView}/>
     </>
   );
 };
