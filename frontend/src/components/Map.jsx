@@ -1,12 +1,13 @@
 import io from 'socket.io-client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, setState } from 'react';
 import * as L from 'leaflet';
 import markerImg from '../icon/location.png';
 import config from '../config.js';
+import MainView from './MainView';
 
 const apiUrl = config;
 
-const Map = ({ delayedData, resetMap, selectedTrain }) => {
+const Map = ({ delayedData, resetMap, selectedTrain,  rerenderMainView, setRerenderMainView }) => {
   const mapRef = useRef(null);
   const markers = useRef({});
 
@@ -53,6 +54,10 @@ const Map = ({ delayedData, resetMap, selectedTrain }) => {
             const marker = L.marker(data.position, { icon: myMarker }).bindPopup(data.trainnumber).addTo(map);
             markers.current[data.trainnumber] = marker;
           }
+          if (data.position) {
+            train.position =  <span className='green'></span>
+          }
+          setRerenderMainView(prevState => !prevState);
         }
       })
     }
@@ -62,7 +67,7 @@ const Map = ({ delayedData, resetMap, selectedTrain }) => {
     return () => {
       map.remove();
     };
-  }, [delayedData, resetMap, selectedTrain]);
+  }, [delayedData, resetMap, selectedTrain, setRerenderMainView]);
 
   return <div id="map" className="map"></div>;
 };

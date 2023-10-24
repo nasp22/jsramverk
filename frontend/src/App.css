@@ -149,6 +149,14 @@ td:last-child {
   margin-top: -4px;
 }
 
+.green {
+  height: 15px;
+  width: 15px;
+  background-color: #0c7b02;
+  border-radius: 50%;
+  display: inline-block;
+}
+
 .edit:hover {
   color: #0a79df;
 }

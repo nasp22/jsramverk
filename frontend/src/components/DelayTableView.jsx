@@ -23,6 +23,7 @@ const DelayTableView = ({ onTrainClick, delayedData }) => {
       <td>Nuvarande station</td>
       <td>Från / Till</td>
       <td>Försenat (min)</td>
+      <td>LIVE</td>
       </tr>
         {delayedData.map((item, index) => (
           <tr
@@ -41,6 +42,7 @@ const DelayTableView = ({ onTrainClick, delayedData }) => {
               </div>
             </td>
             <td className="delay">{outputDelay(item)}</td>
+            <td className="live">{item.position}</td>
           </tr>
         ))}
       </tbody>
